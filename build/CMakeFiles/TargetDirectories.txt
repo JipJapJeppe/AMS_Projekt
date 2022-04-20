@@ -1,0 +1,2 @@
+C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/CMakeFiles/edit_cache.dir
+C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/CMakeFiles/rebuild_cache.dir
