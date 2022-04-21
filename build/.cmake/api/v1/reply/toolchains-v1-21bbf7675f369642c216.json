@@ -1,0 +1,117 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : {},
+				"path" : "C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc.exe",
+				"version" : ""
+			},
+			"language" : "ASM",
+			"sourceFileExtensions" : 
+			[
+				"s",
+				"S",
+				"asm"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/lib/gcc/xtensa-esp32s3-elf/8.4.0/include",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/lib/gcc/xtensa-esp32s3-elf/8.4.0/include-fixed",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/sys-include",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/include"
+					],
+					"linkDirectories" : 
+					[
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/lib/gcc/xtensa-esp32s3-elf/8.4.0",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/lib/gcc",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"gcc",
+						"c",
+						"nosys",
+						"c",
+						"gcc"
+					]
+				},
+				"path" : "C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc.exe",
+				"version" : "8.4.0"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/include/c++/8.4.0",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/include/c++/8.4.0/xtensa-esp32s3-elf",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/include/c++/8.4.0/backward",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/lib/gcc/xtensa-esp32s3-elf/8.4.0/include",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/lib/gcc/xtensa-esp32s3-elf/8.4.0/include-fixed",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/sys-include",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/include"
+					],
+					"linkDirectories" : 
+					[
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/lib/gcc/xtensa-esp32s3-elf/8.4.0",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/lib/gcc",
+						"C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/xtensa-esp32s3-elf/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"m",
+						"gcc",
+						"c",
+						"nosys",
+						"c",
+						"gcc"
+					]
+				},
+				"path" : "C:/Users/dryos/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch2-8.4.0/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-g++.exe",
+				"version" : "8.4.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"mm",
+				"mpp",
+				"CPP"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}
