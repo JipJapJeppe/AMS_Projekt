@@ -632,15 +632,15 @@
 		},
 		{
 			"backtrace" : 3,
+			"id" : "__idf_cbor::@54bec30243cbf65f6214"
+		},
+		{
+			"backtrace" : 3,
 			"id" : "__idf_asio::@db1a8833e22596808d70"
 		},
 		{
 			"backtrace" : 3,
 			"id" : "__idf_cmock::@38f9eb59693b7394f54c"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "__idf_cbor::@54bec30243cbf65f6214"
 		},
 		{
 			"backtrace" : 3,
@@ -660,15 +660,15 @@
 		},
 		{
 			"backtrace" : 3,
+			"id" : "__idf_protocomm::@d76d01c8dec06205e1fc"
+		},
+		{
+			"backtrace" : 3,
 			"id" : "__idf_esp_lcd::@d5a84597e1633c9ab0d3"
 		},
 		{
 			"backtrace" : 3,
 			"id" : "__idf_protobuf-c::@b14513c4bd859268ec22"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "__idf_protocomm::@d76d01c8dec06205e1fc"
 		},
 		{
 			"backtrace" : 3,
@@ -680,7 +680,19 @@
 		},
 		{
 			"backtrace" : 3,
-			"id" : "__idf_json::@c78a8bdc820334f01148"
+			"id" : "__idf_esp_websocket_client::@2aa04d350e0c9afab7cd"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "__idf_expat::@af4f74c6fac3f93a3341"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "__idf_wear_levelling::@cb21b0d7c0815cff11c6"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "__idf_fatfs::@75ac1d9b25dacc8cc9e7"
 		},
 		{
 			"backtrace" : 3,
@@ -696,7 +708,7 @@
 		},
 		{
 			"backtrace" : 3,
-			"id" : "__idf_openssl::@e614527ea5fe5ca5f395"
+			"id" : "__idf_json::@c78a8bdc820334f01148"
 		},
 		{
 			"backtrace" : 3,
@@ -708,31 +720,19 @@
 		},
 		{
 			"backtrace" : 3,
+			"id" : "__idf_openssl::@e614527ea5fe5ca5f395"
+		},
+		{
+			"backtrace" : 3,
 			"id" : "__idf_perfmon::@aac0f647c32bb8f54a67"
 		},
 		{
 			"backtrace" : 3,
-			"id" : "__idf_expat::@af4f74c6fac3f93a3341"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "__idf_esp_websocket_client::@2aa04d350e0c9afab7cd"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "__idf_wear_levelling::@cb21b0d7c0815cff11c6"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "__idf_fatfs::@75ac1d9b25dacc8cc9e7"
+			"id" : "__idf_usb::@4a2418067d0bb57af462"
 		},
 		{
 			"backtrace" : 3,
 			"id" : "__idf_wifi_provisioning::@9d7e7ffe1b15746c1098"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "__idf_usb::@4a2418067d0bb57af462"
 		},
 		{
 			"backtrace" : 3,

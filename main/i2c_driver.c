@@ -14,43 +14,50 @@ void i2c_master_init()
 
     ESP_ERROR_CHECK(i2c_param_config(I2C_MASTER_PORT, &i2c_conf));
 
-    // ESP_ERROR_CHECK(i2c_set_period(I2C_MASTER_PORT, thigh, tlow));
-    // ESP_ERROR_CHECK(i2c_set_start_timing(I2C_MASTER_PORT, tsusta, thdsta));
-    // ESP_ERROR_CHECK(i2c_set_stop_timing(I2C_MASTER_PORT, tsusto, tbus));
-    // ESP_ERROR_CHECK(i2c_set_data_timing(I2C_MASTER_PORT, tsudat, thddat));
-
     ESP_ERROR_CHECK(i2c_driver_install(I2C_MASTER_PORT, I2C_MODE_MASTER, 0, 0, 0));
 }
 
-void i2c_write_to_address(uint8_t address, uint8_t *data_to_write)
+void i2c_write_to_register_address(uint8_t register_address, uint8_t *data_to_write, size_t data_length)
 {
-    i2c_cmd_handle_t i2c_handle = NULL;
-
-    i2c_master_start(i2c_handle);
-    i2c_master_write_byte(i2c_handle, ZMOD4410_ADDR, true);
-    i2c_master_write_byte(i2c_handle, address, true);
-
-    for(int i = 0; i<sizeof(data_to_write); i++)
-    {
-        i2c_master_write_byte(i2c_handle, data_to_write[i], true);
-    }
-
-    i2c_master_cmd_begin(I2C_MASTER_PORT, i2c_handle, portMAX_DELAY);
+    i2c_cmd_handle_t i2c_cmd = i2c_cmd_link_create();
+    // Send start
+    ESP_ERROR_CHECK(i2c_master_start(i2c_cmd));
+    // Write device address
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (ZMOD4410_ADDR << 1), ACK_ENABLE));
+    // Write register address
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, register_address, ACK_ENABLE));
+    // Write data
+    ESP_ERROR_CHECK(i2c_master_write(i2c_cmd, data_to_write, data_length, ACK_ENABLE));
+    // Send stop
+    ESP_ERROR_CHECK(i2c_master_stop(i2c_cmd));
+    // Sends queued commands
+    ESP_ERROR_CHECK(i2c_master_cmd_begin(I2C_MASTER_PORT, i2c_cmd, portMAX_DELAY));
+    i2c_cmd_link_delete(i2c_cmd);
 }
 
-uint8_t *i2c_read_from_address(uint8_t address)
+void i2c_read_from_register_address(uint8_t register_address, uint8_t *read_data)
 {
-    // uint8_t *data_array = malloc(128);
-    // memset(data_array, 0, sizeof(data_array));
+    size_t buffer_size = 128;
 
-    // i2c_master_write_read_device(I2C_MASTER_PORT,
-    //                              ZMOD4410_ADDR,
-    //                              &address,
-    //                              sizeof(address),
-    //                              data_array,
-    //                              sizeof(data_array),
-    //                              portMAX_DELAY);
+    i2c_cmd_handle_t i2c_cmd = i2c_cmd_link_create();
+    // Send start
+    ESP_ERROR_CHECK(i2c_master_start(i2c_cmd));
+    // Write device address
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (ZMOD4410_ADDR << 1), ACK_ENABLE));
+    // Write register address
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, register_address, ACK_ENABLE));
+    // Extra start to read
+    ESP_ERROR_CHECK(i2c_master_start(i2c_cmd));
+    // Write device address
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (ZMOD4410_ADDR << 1), ACK_ENABLE));
+    // Read data
+    ESP_ERROR_CHECK(i2c_master_read(i2c_cmd, read_data, buffer_size, ACK_ENABLE));
 
-    // return data_array;
-    return NULL;
+    // NACK skal sendes her ?? hvad er værdi for NACK?
+
+    // Send stop
+    ESP_ERROR_CHECK(i2c_master_stop(i2c_cmd));
+    // Sends queued commands
+    ESP_ERROR_CHECK(i2c_master_cmd_begin(I2C_MASTER_PORT, i2c_cmd, portMAX_DELAY));
+    i2c_cmd_link_delete(i2c_cmd);
 }

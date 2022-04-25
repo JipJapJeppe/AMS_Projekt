@@ -5,12 +5,12 @@
 		"commands" : 
 		[
 			"add_custom_target",
-			"__add_uf2_targets",
+			"__add_dfu_targets",
 			"project"
 		],
 		"files" : 
 		[
-			"C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/tools/cmake/uf2.cmake",
+			"C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/tools/cmake/dfu.cmake",
 			"C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/tools/cmake/project.cmake",
 			"CMakeLists.txt"
 		],
@@ -28,13 +28,13 @@
 			{
 				"command" : 1,
 				"file" : 1,
-				"line" : 482,
+				"line" : 479,
 				"parent" : 1
 			},
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 35,
+				"line" : 25,
 				"parent" : 2
 			}
 		]
@@ -42,14 +42,14 @@
 	"dependencies" : 
 	[
 		{
-			"id" : "bootloader::@6890427a1f51a3e7e1df"
+			"id" : "gen_project_binary::@6890427a1f51a3e7e1df"
 		},
 		{
-			"id" : "gen_project_binary::@6890427a1f51a3e7e1df"
+			"id" : "bootloader::@6890427a1f51a3e7e1df"
 		}
 	],
-	"id" : "uf2::@6890427a1f51a3e7e1df",
-	"name" : "uf2",
+	"id" : "dfu::@6890427a1f51a3e7e1df",
+	"name" : "dfu",
 	"paths" : 
 	{
 		"build" : ".",
@@ -77,13 +77,13 @@
 		{
 			"backtrace" : 3,
 			"isGenerated" : true,
-			"path" : "build/CMakeFiles/uf2",
+			"path" : "build/CMakeFiles/dfu",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "build/CMakeFiles/uf2.rule",
+			"path" : "build/CMakeFiles/dfu.rule",
 			"sourceGroupIndex" : 1
 		}
 	],

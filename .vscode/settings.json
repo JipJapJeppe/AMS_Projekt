@@ -3,6 +3,7 @@
     "files.associations": {
         "*.ipp": "c",
         "*.inc": "c",
-        "cstring": "c"
+        "cstring": "c",
+        "gpio_types.h": "c"
     }
 }
