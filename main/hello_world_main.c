@@ -12,10 +12,15 @@
 #include "freertos/task.h"
 #include "esp_system.h"
 #include "esp_log.h"
-#include "i2c_driver.h"
+#include "tlv493d_driver.h"
 
 void app_main(void)
 {
-    i2c_master_init();
-    ESP_LOGI(__func__, "All gut!");
+    uint8_t read_data[3] = {0};
+
+    tlv493d_init();
+
+    tlv493d_read_axis_data(&read_data, 0);
+
+    ESP_LOGI(__func__, "Status read, x: %u, y: %u, z: %u", read_data[0], read_data[1], read_data[2]);
 }

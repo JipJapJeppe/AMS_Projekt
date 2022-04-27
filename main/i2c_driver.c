@@ -1,6 +1,6 @@
 #include "i2c_driver.h"
 
-void i2c_master_init()
+void i2c_master_init(uint32_t i2c_mode)
 {
     i2c_config_t i2c_conf =
         {
@@ -9,7 +9,7 @@ void i2c_master_init()
             .sda_pullup_en = GPIO_PULLUP_ENABLE,
             .scl_io_num = SCL_GPIO_NUM,
             .scl_pullup_en = GPIO_PULLUP_ENABLE,
-            .master.clk_speed = I2C_NORMAL_MODE,
+            .master.clk_speed = i2c_mode,
         };
 
     ESP_ERROR_CHECK(i2c_param_config(I2C_MASTER_PORT, &i2c_conf));
@@ -17,17 +17,15 @@ void i2c_master_init()
     ESP_ERROR_CHECK(i2c_driver_install(I2C_MASTER_PORT, I2C_MODE_MASTER, 0, 0, 0));
 }
 
-void i2c_write_to_register_address(uint8_t register_address, uint8_t *data_to_write, size_t data_length)
+void i2c_write_to_device_address(uint8_t dev_addr, uint8_t *data, size_t data_len)
 {
     i2c_cmd_handle_t i2c_cmd = i2c_cmd_link_create();
     // Send start
     ESP_ERROR_CHECK(i2c_master_start(i2c_cmd));
     // Write device address
-    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (ZMOD4410_ADDR << 1), ACK_ENABLE));
-    // Write register address
-    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, register_address, ACK_ENABLE));
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (dev_addr << 1) | I2C_MASTER_WRITE, ACK_ENABLE));
     // Write data
-    ESP_ERROR_CHECK(i2c_master_write(i2c_cmd, data_to_write, data_length, ACK_ENABLE));
+    ESP_ERROR_CHECK(i2c_master_write(i2c_cmd, data, data_len, ACK_ENABLE));
     // Send stop
     ESP_ERROR_CHECK(i2c_master_stop(i2c_cmd));
     // Sends queued commands
@@ -35,26 +33,15 @@ void i2c_write_to_register_address(uint8_t register_address, uint8_t *data_to_wr
     i2c_cmd_link_delete(i2c_cmd);
 }
 
-void i2c_read_from_register_address(uint8_t register_address, uint8_t *read_data)
+void i2c_read_from_device_address(uint8_t dev_addr, uint8_t *read_data, size_t data_len)
 {
-    size_t buffer_size = 128;
-
     i2c_cmd_handle_t i2c_cmd = i2c_cmd_link_create();
     // Send start
     ESP_ERROR_CHECK(i2c_master_start(i2c_cmd));
     // Write device address
-    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (ZMOD4410_ADDR << 1), ACK_ENABLE));
-    // Write register address
-    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, register_address, ACK_ENABLE));
-    // Extra start to read
-    ESP_ERROR_CHECK(i2c_master_start(i2c_cmd));
-    // Write device address
-    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (ZMOD4410_ADDR << 1), ACK_ENABLE));
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (dev_addr << 1) | I2C_MASTER_READ, ACK_ENABLE));
     // Read data
-    ESP_ERROR_CHECK(i2c_master_read(i2c_cmd, read_data, buffer_size, ACK_ENABLE));
-
-    // NACK skal sendes her ?? hvad er værdi for NACK?
-
+    ESP_ERROR_CHECK(i2c_master_read(i2c_cmd, read_data, data_len, ACK_ENABLE));
     // Send stop
     ESP_ERROR_CHECK(i2c_master_stop(i2c_cmd));
     // Sends queued commands

@@ -557,7 +557,7 @@
 				},
 				{
 					"backtrace" : 14,
-					"define" : "PROJECT_VER=\"adaacc4-dirty\""
+					"define" : "PROJECT_VER=\"45d4f84-dirty\""
 				}
 			],
 			"includes" : 
