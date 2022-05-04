@@ -3,6 +3,7 @@
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
 #include "esp_system.h"
+#include "esp_log.h"
 #include "driver/i2c.h"
 #include "hal/i2c_types.h"
 #include "hal/gpio_types.h"

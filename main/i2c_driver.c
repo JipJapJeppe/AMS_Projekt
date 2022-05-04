@@ -29,7 +29,11 @@ void i2c_write_to_device_address(uint8_t dev_addr, uint8_t *data, size_t data_le
     // Send stop
     ESP_ERROR_CHECK(i2c_master_stop(i2c_cmd));
     // Sends queued commands
-    ESP_ERROR_CHECK(i2c_master_cmd_begin(I2C_MASTER_PORT, i2c_cmd, portMAX_DELAY));
+    esp_err_t err = i2c_master_cmd_begin(I2C_MASTER_PORT, i2c_cmd, portMAX_DELAY);
+    if(err != ESP_OK)
+    {
+        ESP_LOGE(__func__, "I2C device error: %s", esp_err_to_name(err));
+    }
     i2c_cmd_link_delete(i2c_cmd);
 }
 
@@ -45,6 +49,10 @@ void i2c_read_from_device_address(uint8_t dev_addr, uint8_t *read_data, size_t d
     // Send stop
     ESP_ERROR_CHECK(i2c_master_stop(i2c_cmd));
     // Sends queued commands
-    ESP_ERROR_CHECK(i2c_master_cmd_begin(I2C_MASTER_PORT, i2c_cmd, portMAX_DELAY));
+    esp_err_t err = i2c_master_cmd_begin(I2C_MASTER_PORT, i2c_cmd, portMAX_DELAY);
+    if(err != ESP_OK)
+    {
+        ESP_LOGE(__func__, "I2C device error: %s", esp_err_to_name(err));
+    }
     i2c_cmd_link_delete(i2c_cmd);
 }
