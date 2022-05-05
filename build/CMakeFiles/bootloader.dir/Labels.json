@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/CMakeFiles/bootloader"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/CMakeFiles/bootloader.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "C:/Users/dryos/.espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "C:/Espressif/frameworks/esp-idf-v4.4/AMS_Projekt/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		}
 	],
 	"target" : 

@@ -16,14 +16,14 @@
 
 void app_main(void)
 {
-    uint8_t read_data[3] = {0};
+    int16_t read_data[3] = {0};
 
     tlv493d_init();
 
     while (1)
     {
-        vTaskDelay((TickType_t) 1000/portTICK_RATE_MS);
+        vTaskDelay((TickType_t) 200/portTICK_RATE_MS);
         tlv493d_read_axis_data(read_data, 0);
-        ESP_LOGI(__func__, "Status read, x: %u, y: %u, z: %u", read_data[0], read_data[1], read_data[2]);
+        ESP_LOGI(__func__, "Status read, x: %i, y: %i, z: %i", read_data[0], read_data[1], read_data[2]);
     }
 }

@@ -25,7 +25,10 @@ void i2c_write_to_device_address(uint8_t dev_addr, uint8_t *data, size_t data_le
     // Write device address
     ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (dev_addr << 1) | I2C_MASTER_WRITE, ACK_ENABLE));
     // Write data
-    ESP_ERROR_CHECK(i2c_master_write(i2c_cmd, data, data_len, ACK_ENABLE));
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, data[0], ACK_ENABLE));
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, data[1], ACK_ENABLE));
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, data[2], ACK_ENABLE));
+    ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, data[3], ACK_ENABLE));
     // Send stop
     ESP_ERROR_CHECK(i2c_master_stop(i2c_cmd));
     // Sends queued commands
@@ -45,7 +48,7 @@ void i2c_read_from_device_address(uint8_t dev_addr, uint8_t *read_data, size_t d
     // Write device address
     ESP_ERROR_CHECK(i2c_master_write_byte(i2c_cmd, (dev_addr << 1) | I2C_MASTER_READ, ACK_ENABLE));
     // Read data
-    ESP_ERROR_CHECK(i2c_master_read(i2c_cmd, read_data, data_len, ACK_ENABLE));
+    ESP_ERROR_CHECK(i2c_master_read(i2c_cmd, read_data, data_len, I2C_MASTER_ACK));
     // Send stop
     ESP_ERROR_CHECK(i2c_master_stop(i2c_cmd));
     // Sends queued commands

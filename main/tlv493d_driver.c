@@ -26,8 +26,8 @@ void tlv493d_startup()
     vTaskDelay((TickType_t)500 / portTICK_RATE_MS);
 
     // Restart
-    gpio_set_level(PWR_GPIO, 1);
-    gpio_set_level(SDA_GPIO_NUM, 0);
+    gpio_set_level(PWR_GPIO, 1); 
+    gpio_set_level(SDA_GPIO_NUM, 0); //Address 0 (h1F)
     vTaskDelay((TickType_t)500 / portTICK_RATE_MS);
 
     // // Send recovery
@@ -74,6 +74,10 @@ void tlv493d_init()
     i2c_read_from_device_address(TLV493D_ADDR, register_data, sizeof(register_data));
 
     // Write registers require specific bits from the read_registers defined in the datasheet
+    for(int i = 0 ; i < 10 ; i++)
+    {
+        printf("regdata: %u \n", register_data[i]);
+    }
     write_data[0] = 0b00000000;
     write_data[1] = register_data[7] & MODE_1_REG;
     write_data[2] = register_data[8];
@@ -89,10 +93,10 @@ void tlv493d_init()
     ESP_LOGI(__func__, "Init complete");
 }
 
-void tlv493d_read_axis_data(uint8_t *axis_data, size_t data_len)
+void tlv493d_read_axis_data(int16_t *axis_data, size_t data_len)
 {
-    uint16_t Bx = 0, By = 0, Bz = 0;
-    uint8_t register_data[7];
+    int16_t Bx = 0, By = 0, Bz = 0;
+    uint8_t register_data[10] = {0};
 
     i2c_read_from_device_address(TLV493D_ADDR, register_data, sizeof(register_data));
 
@@ -102,6 +106,19 @@ void tlv493d_read_axis_data(uint8_t *axis_data, size_t data_len)
     By |= (register_data[4] & 0b00001111);
     Bz |= (register_data[2] << 4);
     Bz |= (register_data[5] & 0b00001111);
+
+    if(Bx >= 2048)
+    {
+        Bx -= 4096;
+    }
+    if(By >= 2048)
+    {
+        By -= 4096;
+    }
+    if(Bz >= 2048)
+    {
+        Bz -= 4096;
+    }
 
     axis_data[0] = Bx;
     axis_data[1] = By;

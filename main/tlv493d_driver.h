@@ -27,6 +27,6 @@
 
 void tlv493d_init();
 void tlv493d_write_data(uint8_t *write_data, size_t data_len);
-void tlv493d_read_axis_data(uint8_t *read_data, size_t data_len);
+void tlv493d_read_axis_data(int16_t *read_data, size_t data_len);
 void tlv493d_read_temp_data(uint8_t *read_data, size_t data_len);
 void tlv493d_full_reset();
