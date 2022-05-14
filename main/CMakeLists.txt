@@ -1,2 +1,2 @@
-idf_component_register(SRCS "i2c_driver.c" "hello_world_main.c" "WiFi_Driver.c" "tlv493d_driver.c"
+idf_component_register(SRCS "i2c_master.cpp" "main.cpp" "wifi_ap.cpp" "tlv493d.cpp" "udp.cpp" "c_files/i2c_driver.c"
                     INCLUDE_DIRS "")
