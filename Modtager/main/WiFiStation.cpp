@@ -30,7 +30,7 @@ void WiFiStation::eventHandler(void *arg, esp_event_base_t event_base,
         }
         else
         {
-            xEventGroupSetBits(_s_wifi_event_group, WIFI_FAIL_BIT);
+            xEventGroupSetBits(self->_s_wifi_event_group, WIFI_FAIL_BIT);
         }
     }
     else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP)
@@ -39,13 +39,13 @@ void WiFiStation::eventHandler(void *arg, esp_event_base_t event_base,
         ESP_LOGI(WIFI_TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         self->_s_retry_num = 0;
         xEventGroupSetBits(self->_s_wifi_event_group, WIFI_CONNECTED_BIT);
+        xQueueSendToBack(*self->_ip_queue, &event->ip_info.ip.addr, portMAX_DELAY);
     }
 }
 
-WiFiStation::WiFiStation(uint8_t ssid[32], uint8_t password[64])
+WiFiStation::WiFiStation(QueueHandle_t *ip_queue, const char *ssid, const char *password)
+ : _ip_queue(ip_queue), _ssid(ssid), _password(password)
 {
-    memcpy(&_ssid[0], &ssid[0], sizeof(uint8_t[32]));
-    memcpy(&_password[0], &password[0], sizeof(uint8_t[64]));
 }
 
 bool WiFiStation::getConnectionStatus()
@@ -57,6 +57,7 @@ void WiFiStation::init()
 {
     _s_wifi_event_group = xEventGroupCreate();
 
+    ESP_ERROR_CHECK(nvs_flash_init()); // ESP Wi-Fi stores settings and info in NVS flash
     ESP_ERROR_CHECK(esp_netif_init());
 
     ESP_ERROR_CHECK(esp_event_loop_create_default());
@@ -82,8 +83,8 @@ void WiFiStation::init()
     wifi_config.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
     wifi_config.sta.pmf_cfg.capable = true;
     wifi_config.sta.pmf_cfg.required = false;
-    memcpy(&wifi_config.sta.ssid[0], &_ssid[0], sizeof(_ssid));
-    memcpy(&wifi_config.sta.password[0], &_password[0], sizeof(_password));
+    strcpy((char *)wifi_config.sta.ssid, _ssid);
+    strcpy((char *)wifi_config.sta.password, _password);
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));

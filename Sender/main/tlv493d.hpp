@@ -13,29 +13,36 @@
 #include "driver/gpio.h"
 
 #include "i2c_master.hpp"
+#include "gpio_num.h"
 
 #define MODE_1_REG 0b01111000
 #define MODE_2_REG 0b00011111
 
-#define LOW_POWER_MODE {0b0000000, 0b0000001, 0b0000000, 0b11000000}
+#define LOW_POWER_MODE                              \
+    {                                               \
+        0b0000000, 0b0000001, 0b0000000, 0b11000000 \
+    }
 
 #define POWER_MODE LOW_POWER_MODE
 
-typedef enum tlv493d_addr{
+typedef enum tlv493d_addr
+{
     TLV493D_ADDR0 = 0x1F,
     TLV493D_ADDR1 = 0x5E,
-}tlv493d_addr_t;
+} tlv493d_addr_t;
 
 class Tlv493d
 {
 public:
-    Tlv493d(I2cMaster* I2c, gpio_num_t power_gpio, tlv493d_addr_t tlv493d_addr);
+    Tlv493d(I2cMaster *I2c, gpio_num_t power_gpio, tlv493d_addr_t tlv493d_addr);
     void init();
     void readPositionData(int16_t *read_data);
+
 protected:
     void startup();
+
 private:
-    I2cMaster* _I2c;
+    I2cMaster *_I2c;
     const gpio_num_t _power_gpio;
     const tlv493d_addr_t _tlv493d_addr;
 };

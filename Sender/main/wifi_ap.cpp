@@ -1,11 +1,27 @@
 #include "wifi_ap.hpp"
 
+void WiFiAP::wifiEventHandler(void *arg, esp_event_base_t event_base,
+                          int32_t event_id, void *event_data)
+{
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_STACONNECTED)
+    {
+        ESP_LOGI(__func__, "Station connected to AP");
+    }
+    else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_STADISCONNECTED)
+    {
+        ESP_LOGW(__func__, "Station disconnected from AP");
+    }
+}
+
 WiFiAP::WiFiAP()
 {
 }
 
 void WiFiAP::init()
 {
+    ESP_ERROR_CHECK(nvs_flash_init()); // ESP Wi-Fi stores settings and info in NVS flash
+    ESP_ERROR_CHECK(esp_netif_init()); // Initiate TCP/IP-stack for Wi-Fi and UDP to work
+
     // Create default WiFi AP (Access Point). Registers default WiFi AP handlers.
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     esp_netif_create_default_wifi_ap();
@@ -24,6 +40,7 @@ void WiFiAP::init()
     wifi_config_t wifi_config = {};
     strcpy((char *)wifi_config.ap.ssid, MY_SSID);
     strcpy((char *)wifi_config.ap.password, MY_PASS);
+    wifi_config.ap.authmode = WIFI_AUTH_WPA2_PSK;
     wifi_config.ap.max_connection = 1;
     wifi_config.ap.ssid_hidden = true;
 
@@ -36,18 +53,5 @@ void WiFiAP::init()
 
     printf("\n");
     ESP_LOGI(__func__, "Init Wi-Fi finished. SSID: %s password: %s\n",
-             MY_SSID, MY_PASS);
-}
-
-void WiFiAP::wifiEventHandler(void *arg, esp_event_base_t event_base,
-                          int32_t event_id, void *event_data)
-{
-    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_STACONNECTED)
-    {
-        ESP_LOGI(__func__, "Station connected to AP");
-    }
-    else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_STADISCONNECTED)
-    {
-        ESP_LOGW(__func__, "Station disconnected from AP");
-    }
+             wifi_config.ap.ssid, wifi_config.ap.password);
 }

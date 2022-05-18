@@ -8,18 +8,17 @@ Tlv493d::Tlv493d(I2cMaster *I2c, gpio_num_t power_gpio, tlv493d_addr_t tlv493d_a
 void Tlv493d::startup()
 {
     gpio_set_direction(_power_gpio, GPIO_MODE_OUTPUT);
-    gpio_set_direction(_I2c->getSdaGpio(), GPIO_MODE_OUTPUT);
-    gpio_set_level(_I2c->getSdaGpio(), 0);
+    gpio_set_direction((gpio_num_t)_I2c->getSdaGpio(), GPIO_MODE_OUTPUT);
+    gpio_set_level((gpio_num_t)_I2c->getSdaGpio(), 0);
     gpio_set_level(_power_gpio, 0);
 
     vTaskDelay((TickType_t)500 / portTICK_RATE_MS);
 
     // Restart
     gpio_set_level(_power_gpio, 1);
-    gpio_set_level(_I2c->getSdaGpio(), 0); // Address 0 (h1F)
     vTaskDelay((TickType_t)500 / portTICK_RATE_MS);
 
-    ESP_LOGI(__func__, "Startup complete");
+    ESP_LOGI(__func__, "TLV493D startup complete");
 }
 
 void Tlv493d::init()
@@ -28,16 +27,16 @@ void Tlv493d::init()
     uint8_t write_data[3] = {0};
     uint8_t power_mode[4] = POWER_MODE;
 
-    this->startup();
+    startup();
     _I2c->init();
 
     _I2c->readFromDeviceAddress(_tlv493d_addr, register_data, sizeof(register_data));
 
     // Write registers require specific bits from the read_registers defined in the datasheet
-    for (int i = 0; i < 10; i++)
-    {
-        printf("regdata: %u \n", register_data[i]);
-    }
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     printf("regdata: %u \n", register_data[i]);
+    // }
     write_data[0] = 0b00000000;
     write_data[1] = register_data[7] & MODE_1_REG;
     write_data[2] = register_data[8];
@@ -50,7 +49,7 @@ void Tlv493d::init()
 
     _I2c->writeToDeviceAddress(_tlv493d_addr, write_data, sizeof(write_data));
 
-    ESP_LOGI(__func__, "Init complete");
+    ESP_LOGI(__func__, "TLV493D init complete");
 }
 
 void Tlv493d::readPositionData(int16_t *read_data)

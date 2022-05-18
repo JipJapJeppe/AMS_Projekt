@@ -1,5 +1,7 @@
+#pragma once
 #include <stdio.h>
 #include <string.h>
+#include <string>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
@@ -14,21 +16,22 @@
 
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT BIT1
-#define WIFI_CONNECT_MAXIMUM_RETRY 5
+#define WIFI_CONNECT_MAXIMUM_RETRY 20
 
 class WiFiStation
 {
 public:
-    WiFiStation(uint8_t ssid[32], uint8_t password[64]);
+    WiFiStation(QueueHandle_t *ip_queue, const char *ssid, const char* password);
     void init();
     bool getConnectionStatus();
 
 private:
     static void eventHandler(void *arg, esp_event_base_t event_base,
                              int32_t event_id, void *event_data);
-    static EventGroupHandle_t _s_wifi_event_group;
+    const QueueHandle_t *_ip_queue;
+    EventGroupHandle_t _s_wifi_event_group;
     int _s_retry_num = 0;
-    uint8_t _ssid[32];
-    uint8_t _password[64];
+    const char *_ssid;
+    const char *_password;
     bool _connected;
 };
