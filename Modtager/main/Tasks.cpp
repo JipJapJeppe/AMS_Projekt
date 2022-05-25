@@ -27,17 +27,17 @@ void wireless_task(void *args)
 void display_task(void *args)
 {
     QueueHandle_t data_queue = (QueueHandle_t)args;
+    Display display;
 
     int16_t axis_data[3] = {0};
 
+    xQueueReceive(data_queue, (void *)axis_data, portMAX_DELAY);
+    display.init();
+
     while (1)
     {
-        xQueueReceive(data_queue, (void *)axis_data, portMAX_DELAY);
-        // ESP_LOGI(__func__, "Status read, x: %i, y: %i, z: %i", axis_data[0], axis_data[1], axis_data[2]);
-        printf("\033[%d;%dH%c\n", axis_data[0], axis_data[1], 'o');
+        display.plot_point(axis_data);
         vTaskDelay((TickType_t)10 / portTICK_RATE_MS);
-
-        printf("\x1b[1F"); // Move to beginning of previous line
-        printf("\x1b[2K"); // Clear entire line
+        xQueueReceive(data_queue, (void *)axis_data, portMAX_DELAY);
     }
 }

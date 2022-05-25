@@ -36,16 +36,6 @@ void UDP::init()
         return;
     }
 
-    // Set 1 second timeout on receive message, to prevent delays from occuring
-    error_check = setsockopt(_socket, SOL_SOCKET, SO_RCVTIMEO,
-                             (const void *)&socket_timeout, sizeof(socket_timeout));
-
-    if (error_check < 0)
-    {
-        ESP_LOGE(__func__, "Unable to set socket receive timout option - error: %s", strerror(errno));
-        return;
-    }
-
     ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
                                                         IP_EVENT_AP_STAIPASSIGNED,
                                                         udpEventHandler,
@@ -55,11 +45,18 @@ void UDP::init()
 
 void UDP::sendData(const int16_t *tx_data, const size_t data_len)
 {
-    ESP_LOGI(__func__, "Sending data, x: %i, y: %i, z: %i", tx_data[0], tx_data[1], tx_data[2]);
-    int error_check = sendto(_socket, tx_data, data_len, 0,
-                             (struct sockaddr*)&_dest_addr, sizeof(_dest_addr));
+    int16_t new_tx_data[4] = {0};
+    for (int i = 0; i < 3; i++)
+    {
+        new_tx_data[i] = tx_data[i];
+    }
+    new_tx_data[3] = calculateChecksum(tx_data);
 
-    if(error_check < 0) {
+    ESP_LOGD(__func__, "Sending data, x: %i, y: %i, z: %i, checksum: %i", new_tx_data[0], new_tx_data[1], new_tx_data[2], new_tx_data[3]);
+    int error_check = sendto(_socket, new_tx_data, data_len + sizeof(int16_t), 0, (struct sockaddr *)&_dest_addr, sizeof(_dest_addr));
+
+    if (error_check < 0)
+    {
         ESP_LOGE(__func__, "Error occurred during sending - error: %s", strerror(errno));
         return;
     }
@@ -74,9 +71,10 @@ void UDP::receiveData(int16_t *rx_data)
     ESP_LOGW(__func__, "Waiting for response");
 
     int length_of_data = recvfrom(_socket, rx_data, 3,
-                                  0, (struct sockaddr*)&_dest_addr, &socklen);
+                                  0, (struct sockaddr *)&_dest_addr, &socklen);
 
-    if(length_of_data < 0) {
+    if (length_of_data < 0)
+    {
         ESP_LOGE(__func__, "Error occurred during receiving - error: %s", strerror(errno));
         return;
     }
@@ -100,4 +98,18 @@ void UDP::udpEventHandler(void *arg, esp_event_base_t event_base,
         ip_event_ap_staipassigned_t *data = (ip_event_ap_staipassigned_t *)event_data;
         self->setupDestinationIP(data->ip.addr);
     }
+}
+
+int16_t UDP::calculateChecksum(const int16_t *tx_data)
+{
+    uint16_t sum = 0;
+    int16_t checksum = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        sum += tx_data[i];
+    }
+    checksum = ~sum + 1;
+
+    return checksum;
 }

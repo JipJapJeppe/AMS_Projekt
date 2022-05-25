@@ -8,5 +8,7 @@
 #include "esp_log.h"
 #include "esp_console.h"
 
+#include "Display.hpp"
+
 void wireless_task(void *args);
 void display_task(void *args);

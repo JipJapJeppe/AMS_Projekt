@@ -17,6 +17,6 @@ extern "C" void app_main(void)
 {
     QueueHandle_t shared_queue = xQueueCreate(5, sizeof(int16_t[3]));
 
-    xTaskCreatePinnedToCore(joystick_task, "JOYSTICK_TASK", 5000, shared_queue, 2, NULL, PRO_CPU_NUM);
-    xTaskCreatePinnedToCore(wireless_task, "WIRELESS_TASK", 5000, shared_queue, 2, NULL, APP_CPU_NUM);
+    xTaskCreatePinnedToCore(joystick_task, "JOYSTICK_TASK", 10000, shared_queue, 2, NULL, PRO_CPU_NUM);
+    xTaskCreatePinnedToCore(wireless_task, "WIRELESS_TASK", 10000, shared_queue, 2, NULL, APP_CPU_NUM);
 }

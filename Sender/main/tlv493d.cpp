@@ -66,15 +66,15 @@ void Tlv493d::readPositionData(int16_t *read_data)
     Bz |= (register_data[2] << 4);
     Bz |= (register_data[5] & 0b00001111);
 
-    if (Bx >= 2048)
+    if (Bx > 2047)
     {
         Bx -= 4096;
     }
-    if (By >= 2048)
+    if (By > 2047)
     {
         By -= 4096;
     }
-    if (Bz >= 2048)
+    if (Bz > 2047)
     {
         Bz -= 4096;
     }

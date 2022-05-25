@@ -26,6 +26,7 @@ protected:
                                 int32_t event_id, void *event_data);
 
 private:
+    int16_t validateChecksum(const int16_t *rx_data);
     const QueueHandle_t *_ip_queue;
     struct sockaddr_in _server_addr = {};
     struct sockaddr_in _client_addr = {};

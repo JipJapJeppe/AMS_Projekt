@@ -8,6 +8,7 @@
 #include "sys/errno.h"
 #include <sys/param.h>
 #include <string.h>
+#include <stdint.h>
 
 #define PORT 4321
 
@@ -23,6 +24,7 @@ protected:
     static void udpEventHandler(void *arg, esp_event_base_t event_base,
                              int32_t event_id, void *event_data);
 private:
+    int16_t calculateChecksum(const int16_t *tx_data);
     struct sockaddr_in _dest_addr = {};
     int _socket = 0;
 };

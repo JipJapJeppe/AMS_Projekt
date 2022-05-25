@@ -6,6 +6,7 @@
 #include "freertos/queue.h"
 #include "esp_system.h"
 #include "esp_log.h"
+#include "math.h"
 
 #include "wifi_ap.hpp"
 #include "tlv493d.hpp"
