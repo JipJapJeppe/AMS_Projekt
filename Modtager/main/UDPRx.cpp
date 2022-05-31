@@ -1,4 +1,4 @@
-#include "udp_rx.hpp"
+#include "UDPRx.hpp"
 
 UDPRx::UDPRx(QueueHandle_t *ip_queue) : _ip_queue(ip_queue)
 {
@@ -24,14 +24,14 @@ void UDPRx::init()
     setupSourceIP(ip_address);
 }
 
-void UDPRx::receiveData(int16_t *rx_data)
+udp_status_t UDPRx::receiveData(int16_t *rx_data)
 {
     int16_t new_rx_data[4] = {0};
 
     if (!_socket_bound)
     {
         ESP_LOGE(__func__, "Socket not bound Error");
-        return;
+        return UDP_ERROR;
     }
 
     socklen_t socklen = sizeof(_client_addr);
@@ -41,7 +41,7 @@ void UDPRx::receiveData(int16_t *rx_data)
     if (length_of_data < 0)
     {
         ESP_LOGE(__func__, "Error occurred during receiving - reception error: %s", strerror(errno));
-        return;
+        return UDP_ERROR;
     }
     ESP_LOGD(__func__, "len: %i", length_of_data);
 
@@ -49,16 +49,13 @@ void UDPRx::receiveData(int16_t *rx_data)
     if (checksum_diff != 0)
     {
         ESP_LOGE(__func__, "Error occurred during receiving - checksum error, difference of: %i", checksum_diff);
-        return;
+        return UDP_ERROR;
     }
     rx_data[0] = new_rx_data[0];
     rx_data[1] = new_rx_data[1];
     rx_data[2] = new_rx_data[2];
-}
 
-bool UDPRx::getSocketStatus() const
-{
-    return _socket_bound;
+    return UDP_SUCCESS;
 }
 
 void UDPRx::setupSourceIP(uint32_t ip_address)

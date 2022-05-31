@@ -1,2 +1,2 @@
-idf_component_register(SRCS "Main.cpp" "WiFiStation.cpp" "udp_rx.cpp" "Tasks.cpp" "Display.cpp"
+idf_component_register(SRCS "UDPRx.cpp" "DisplayTask.cpp" "WirelessReceiverTask.cpp" "Main.cpp" "WiFiStation.cpp" "Display.cpp"
                     INCLUDE_DIRS "")

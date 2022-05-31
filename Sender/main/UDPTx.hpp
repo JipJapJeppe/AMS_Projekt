@@ -8,28 +8,30 @@
 #include "sys/errno.h"
 #include <sys/param.h>
 #include <string.h>
-#include "freertos/queue.h"
+#include <stdint.h>
 
 #define PORT 4321
 
-class UDPRx
+typedef enum udp_status
+{
+    UDP_ERROR = 0,
+    UDP_SUCCESS = 1,
+} udp_status_t;
+
+class UDPTx
 {
 public:
-    UDPRx(QueueHandle_t *ip_queue);
+    UDPTx();
     void init();
-    void receiveData(int16_t *rx_data);
-    bool getSocketStatus() const;
+    udp_status_t sendData(const int16_t *tx_data, const size_t data_len);
 
 protected:
-    void setupSourceIP(uint32_t ip_address);
+    void setupDestinationIP(uint32_t ip_address);
     static void udpEventHandler(void *arg, esp_event_base_t event_base,
                                 int32_t event_id, void *event_data);
 
 private:
-    int16_t validateChecksum(const int16_t *rx_data);
-    const QueueHandle_t *_ip_queue;
-    struct sockaddr_in _server_addr = {};
-    struct sockaddr_in _client_addr = {};
+    int16_t calculateChecksum(const int16_t *tx_data);
+    struct sockaddr_in _dest_addr = {};
     int _socket = 0;
-    bool _socket_bound = false;
 };

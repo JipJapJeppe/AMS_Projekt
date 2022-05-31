@@ -13,16 +13,17 @@
 #include "esp_netif.h"
 #include "nvs_flash.h"
 
-#define MY_SSID "magnet_wifi"
-#define MY_PASS "12345678"
-
 class WiFiAP
 {
 public:
-    WiFiAP();
+    WiFiAP(const char *ssid, const char *password);
     void init();
 
 protected:
     static void wifiEventHandler(void *arg, esp_event_base_t event_base,
                              int32_t event_id, void *event_data);
+
+private:
+    const char *_ssid;
+    const char *_password;
 };

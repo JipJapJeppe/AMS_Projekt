@@ -6,17 +6,21 @@
 #include "esp_system.h"
 #include "esp_log.h"
 
-#include "tlv493d.hpp"
-#include "i2c_master.hpp"
-#include "wifi_ap.hpp"
-#include "udp.hpp"
-#include "gpio_num.h"
-#include "Tasks.hpp"
+#include "Tlv493d.hpp"
+#include "I2cMaster.hpp"
+#include "WiFiAP.hpp"
+#include "UDPTx.hpp"
+#include "system_parameters.h"
+#include "JoystickTask.hpp"
+#include "WirelessTransmitterTask.hpp"
 
 extern "C" void app_main(void)
 {
     QueueHandle_t shared_queue = xQueueCreate(5, sizeof(int16_t[3]));
 
-    xTaskCreatePinnedToCore(joystick_task, "JOYSTICK_TASK", 10000, shared_queue, 2, NULL, PRO_CPU_NUM);
-    xTaskCreatePinnedToCore(wireless_task, "WIRELESS_TASK", 10000, shared_queue, 2, NULL, APP_CPU_NUM);
+    JoystickTask joystickTask;
+    WirelessTransmitterTask wirelessTxTask;
+
+    xTaskCreatePinnedToCore(&joystickTask.beginTask, "JOYSTICK_TASK", 10000, (void*)shared_queue, 2, NULL, PRO_CPU_NUM);
+    xTaskCreatePinnedToCore(&wirelessTxTask.beginTask, "WIRELESS_TASK", 10000, (void*)shared_queue, 2, NULL, APP_CPU_NUM);
 }

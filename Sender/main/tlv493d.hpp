@@ -12,8 +12,8 @@
 #include "string.h"
 #include "driver/gpio.h"
 
-#include "i2c_master.hpp"
-#include "gpio_num.h"
+#include "I2cMaster.hpp"
+#include "system_parameters.h"
 
 #define MODE_1_REG 0b01111000
 #define MODE_2_REG 0b00011111

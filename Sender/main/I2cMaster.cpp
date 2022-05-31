@@ -1,4 +1,4 @@
-#include "i2c_master.hpp"
+#include "I2cMaster.hpp"
 
 I2cMaster::I2cMaster(i2c_speed_mode_t i2c_speed_mode, i2c_port_num_t i2c_port_num, gpio_num_t sda_gpio_num, gpio_num_t scl_gpio_num)
 : _i2c_speed_mode(i2c_speed_mode), _i2c_port_num(i2c_port_num), _sda_gpio_num(sda_gpio_num), _scl_gpio_num(scl_gpio_num)

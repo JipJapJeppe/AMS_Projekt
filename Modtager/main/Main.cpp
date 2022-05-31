@@ -1,11 +1,13 @@
-#include "WiFiStation.hpp"
-#include "udp_rx.hpp"
-#include "Tasks.hpp"
+#include "WirelessReceiverTask.hpp"
+#include "DisplayTask.hpp"
 
 extern "C" void app_main()
 {
     QueueHandle_t shared_queue = xQueueCreate(5, sizeof(int16_t[3]));
 
-    xTaskCreatePinnedToCore(display_task, "DISPLAY_TASK", 10000, shared_queue, 2, NULL, PRO_CPU_NUM);
-    xTaskCreatePinnedToCore(wireless_task, "WIRELESS_TASK", 10000, shared_queue, 2, NULL, APP_CPU_NUM);
+    DisplayTask displayTask;
+    WirelessReceiverTask wirelessRxTask;
+
+    xTaskCreatePinnedToCore(displayTask.beginTask, "DISPLAY_TASK", 10000, (void*)shared_queue, 2, NULL, PRO_CPU_NUM);
+    xTaskCreatePinnedToCore(wirelessRxTask.beginTask, "WIRELESS_TASK", 10000, (void*)shared_queue, 2, NULL, APP_CPU_NUM);
 }

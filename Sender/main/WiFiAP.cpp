@@ -1,4 +1,4 @@
-#include "wifi_ap.hpp"
+#include "WiFiAP.hpp"
 
 void WiFiAP::wifiEventHandler(void *arg, esp_event_base_t event_base,
                           int32_t event_id, void *event_data)
@@ -13,7 +13,7 @@ void WiFiAP::wifiEventHandler(void *arg, esp_event_base_t event_base,
     }
 }
 
-WiFiAP::WiFiAP()
+WiFiAP::WiFiAP(const char *ssid, const char *password) : _ssid(ssid), _password(password)
 {
 }
 
@@ -38,8 +38,8 @@ void WiFiAP::init()
                                                         NULL));
     // WiFi config settings.
     wifi_config_t wifi_config = {};
-    strcpy((char *)wifi_config.ap.ssid, MY_SSID);
-    strcpy((char *)wifi_config.ap.password, MY_PASS);
+    strcpy((char *)wifi_config.ap.ssid, _ssid);
+    strcpy((char *)wifi_config.ap.password, _password);
     wifi_config.ap.authmode = WIFI_AUTH_WPA2_PSK;
     wifi_config.ap.max_connection = 1;
     wifi_config.ap.ssid_hidden = true;
