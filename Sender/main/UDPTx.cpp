@@ -57,7 +57,7 @@ udp_status_t UDPTx::sendData(const int16_t *tx_data, const size_t data_len)
 
     if (error_check < 0)
     {
-        ESP_LOGE(__func__, "Error occurred during sending - error: %s", strerror(errno));
+        ESP_LOGD(__func__, "Error occurred during sending - error: %s", strerror(errno));
         return UDP_ERROR;
     }
 

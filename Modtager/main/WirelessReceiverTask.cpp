@@ -6,7 +6,6 @@ WirelessReceiverTask::WirelessReceiverTask()
 
 void WirelessReceiverTask::beginTask(void *args)
 {
-    WirelessReceiverTask *self = (WirelessReceiverTask *)args;
     QueueHandle_t data_queue = (QueueHandle_t)args;
     QueueHandle_t ip_queue = xQueueCreate(1, sizeof(uint32_t));
 
