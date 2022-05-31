@@ -23,7 +23,6 @@ class WiFiStation
 public:
     WiFiStation(QueueHandle_t *ip_queue, const char *ssid, const char* password);
     void init();
-    bool getConnectionStatus();
 
 private:
     static void eventHandler(void *arg, esp_event_base_t event_base,

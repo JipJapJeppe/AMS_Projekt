@@ -48,11 +48,6 @@ WiFiStation::WiFiStation(QueueHandle_t *ip_queue, const char *ssid, const char *
 {
 }
 
-bool WiFiStation::getConnectionStatus()
-{
-    return _connected;
-}
-
 void WiFiStation::init()
 {
     _s_wifi_event_group = xEventGroupCreate();
